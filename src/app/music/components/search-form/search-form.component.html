@@ -1,0 +1,20 @@
+
+<div class="form-group mb-3" [formGroup]="queryForm">
+  <input 
+  class="form-control" 
+  placeholder="Search" 
+  formControlName="query">
+
+  <p *ngIf="queryForm.pending">Please wait...validating...</p>
+<ng-container *ngIf="queryForm.get('query') as field">
+
+<ng-container  *ngIf="field.dirty || field.touched">
+    <div *ngIf="field.hasError('required')"
+    >Field is required</div>
+    <div *ngIf="field.getError('minlength') as error">
+      Mini length is {{error.requiredLength}} characters</div>
+      <div *ngIf="field.getError('censor') as error">
+          Field contains a bad word {{error.badword}}</div>
+</ng-container>
+  
+</ng-container>
