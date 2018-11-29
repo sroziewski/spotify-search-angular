@@ -6,7 +6,8 @@ import { catchError, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-music-search',
   templateUrl: './music-search.component.html',
-  styleUrls: ['./music-search.component.scss']
+  styleUrls: ['./music-search.component.scss'],
+  viewProviders: [MusicSearchService]
 })
 export class MusicSearchComponent implements OnInit {
   albums: Album[]
@@ -19,7 +20,7 @@ export class MusicSearchComponent implements OnInit {
      );
   message: string;
   query$ = this.service.getQuery()
-  
+
   constructor(private service: MusicSearchService) { }
 
   search(query: string){

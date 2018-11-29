@@ -35,8 +35,6 @@ export class MusicSearchService {
    }
 
 
-
-
   search(query: string): any {
     this.queryChange.next(query)
   }
