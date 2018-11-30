@@ -13,11 +13,7 @@ const routes: Routes = [
   },
   {
     path: "music",
-    component: MusicSearchComponent
-  },
-  {
-    path: "music/:id",
-    component: AlbumDetailsComponent
+    loadChildren:'./music/music.module#MusicModule'
   },
   {
     path: "**",
