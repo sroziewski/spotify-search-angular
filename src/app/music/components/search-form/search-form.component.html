@@ -1,20 +1,37 @@
-
 <div class="form-group mb-3" [formGroup]="queryForm">
-  <input 
-  class="form-control" 
-  placeholder="Search" 
-  formControlName="query">
 
-  <p *ngIf="queryForm.pending">Please wait...validating...</p>
-<ng-container *ngIf="queryForm.get('query') as field">
+  <input class="form-control" placeholder="Search" formControlName="query">
 
-<ng-container  *ngIf="field.dirty || field.touched">
-    <div *ngIf="field.hasError('required')"
-    >Field is required</div>
-    <div *ngIf="field.getError('minlength') as error">
-      Mini length is {{error.requiredLength}} characters</div>
+  <p *ngIf="queryForm.pending">
+    Please wait... validating...
+  </p>
+
+  <ng-container *ngIf="queryForm.get('query') as field">
+    <ng-container *ngIf="field.dirty || field.touched">
+
+      <div *ngIf="field.hasError('required')">
+        Field is required
+      </div>
+      
+      <div *ngIf="field.getError('minlength') as error">
+        Minimum length is {{error.requiredLength}} characters
+      </div>
+      
       <div *ngIf="field.getError('censor') as error">
-          Field contains a bad word {{error.badword}}</div>
-</ng-container>
-  
-</ng-container>
+       Field cannot include "{{error.badword}}" 
+      </div>
+      
+    </ng-container>
+  </ng-container>
+
+
+</div>
+
+
+<!-- 
+  Reusable form messages component example:
+  ---
+  <form-messages [field]="queryForm.get('query')">
+    <div *ngIf="queryForm.get('query').hasError('special_error')">
+    </div>
+  </form-messages> -->

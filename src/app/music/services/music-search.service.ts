@@ -1,45 +1,52 @@
-import { Injectable, Inject, InjectionToken, EventEmitter } from '@angular/core';
-import { Album, AlbumResponse } from 'src/app/model/Albums';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http'
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { AuthService } from 'src/app/security/auth.service';
+import {
+  Injectable,
+  Inject,
+  InjectionToken,
+  EventEmitter
+} from "@angular/core";
+import { AlbumsResponse, Album } from "../../model/Album";
+import { HttpClient } from "@angular/common/http";
+import { map, concat, startWith, switchAll, switchMap } from "rxjs/operators";
+import { of, Subject, ReplaySubject, BehaviorSubject } from "rxjs";
 
-export const SEARCH_URL = new InjectionToken('Search API URL');
+export const SEARCH_URL = new InjectionToken("Search API Url");
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class MusicSearchService {
   albumsChange = new BehaviorSubject<Album[]>([]);
-  queryChange = new BehaviorSubject<string>('batman');
-  albums: Album[];
+  queryChange = new BehaviorSubject<string>("batman");
 
   constructor(
-    @Inject(SEARCH_URL) private api_url: string,
+    @Inject(SEARCH_URL) private search_url: string,
     private http: HttpClient
   ) {
-
+    //
     this.queryChange
       .pipe(
         map(query => ({
           type: "album",
           q: query
         })),
-        switchMap(params => this.http.get<AlbumResponse>(this.api_url, { params })
+
+        switchMap(params =>
+          this.http.get<AlbumsResponse>(this.search_url, { params })
         ),
+        
+        // switchAll(),
         map(resp => resp.albums.items)
       )
-      .subscribe(albums => {
-        this.albumsChange.next(albums)
-      });
-   }
-
-
-  search(query: string): any {
-    this.queryChange.next(query)
+      .subscribe(albums => this.albumsChange.next(albums));
   }
 
+  /* Commands */
 
+  search(query: string): any {
+    this.queryChange.next(query);
+  }
+
+  /* Queries */
 
   getAlbums() {
     return this.albumsChange.asObservable();
@@ -49,5 +56,7 @@ export class MusicSearchService {
     return this.queryChange.asObservable();
   }
 
+  ngOnDestroy(){
+    console.log('bye bye from service')
+  }
 }
-import { map, pluck, catchError, switchMap } from "rxjs/operators"

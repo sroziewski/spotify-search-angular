@@ -1,19 +1,16 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Album } from 'src/app/model/Albums';
+import { Component, OnInit, Input } from "@angular/core";
+import { Album } from "../../../model/Album";
 
 @Component({
-  selector: 'app-album-card',
-  templateUrl: './album-card.component.html',
-  styleUrls: ['./album-card.component.scss']
+  selector: "app-album-card",
+  templateUrl: "./album-card.component.html",
+  styleUrls: ["./album-card.component.scss"]
 })
 export class AlbumCardComponent implements OnInit {
-
-  @Input('album')
+  @Input()
   album: Album;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

@@ -1,46 +1,53 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ContentChildren, QueryList, ContentChild } from '@angular/core';
-import { TabComponent } from '../tab/tab.component';
-import { TabsNavComponent } from '../tabs-nav/tabs-nav.component';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  ContentChild,
+  ContentChildren,
+  QueryList,
+  ViewContainerRef
+} from "@angular/core";
+import { TabComponent } from "../tab/tab.component";
+import { TabsNavComponent } from "../tabs-nav/tabs-nav.component";
+import { TabDirective } from "../tab.directive";
 
 @Component({
-  selector: 'app-tabs',
-  templateUrl: './tabs.component.html',
-  styleUrls: ['./tabs.component.scss']
+  selector: "app-tabs",
+  templateUrl: "./tabs.component.html",
+  styleUrls: ["./tabs.component.scss"]
 })
 export class TabsComponent implements OnInit, AfterViewInit {
-
   @ContentChild(TabsNavComponent, { read: TabsNavComponent })
   navRef: TabsNavComponent;
 
-  @ContentChildren(TabComponent)
-  tabsList: QueryList<TabComponent>;
+  @ViewChild("outlet", { read: ViewContainerRef })
+  outlet: ViewContainerRef;
 
-  // tabsList: TabComponent[] = []
+  @ContentChildren(TabDirective)
+  tabsList: QueryList<TabDirective>;
 
-  constructor() {
+  toggle(active: TabDirective) {
+    this.outlet.clear()
+    this.outlet.createEmbeddedView(active.tpl);
   }
 
-  ngOnInit() {
-  }
+  constructor() {}
 
-  toggle(active: TabComponent) {
-    this.tabsList.forEach(tab => {
-      tab.open = active === tab
-    })
-  }
+  ngOnInit() {}
+
+  subs = new Map();
 
   ngAfterContentInit() {
-    this.tabsList.forEach(tab => {
-      tab.openChange.subscribe(() => {
-        this.toggle(tab);
-      })
-    })
+    this.navRef.activeChange.subscribe((tab:TabDirective) => {
+      this.toggle(tab);
+    });
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
       this.navRef.tabs = this.tabsList;
-    })
+    });
+    console.log(this.tabsList);
   }
-
 }

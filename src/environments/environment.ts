@@ -1,17 +1,18 @@
-import { AuthConfig } from "src/app/security/auth.service";
-
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { AuthConfig } from "../app/security/auth.service";
+
 export const environment = {
   production: false,
-  api_url: 'https://api.spotify.com/v1/search',
+  api_url: "https://api.spotify.com/v1/search",
+  
   authConfig: {
-    url: 'https://accounts.spotify.com/authorize',
-    client_id:'59e4301062924eb09789485feafef5bd',
-    redirect_uri:'http://localhost:4200/',
-    response_type:'token'
+    url: "https://accounts.spotify.com/authorize",
+    response_type: "token",
+    redirect_uri: "http://localhost:4200/",
+    client_id: "cf57c07b671840deaede7b1be5e14b71",
   } as AuthConfig
 };
 
@@ -23,4 +24,3 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Album } from 'src/app/model/Albums';
+import { Album } from '../../../model/Album';
 
 @Component({
   selector: 'app-albums-grid',
@@ -8,8 +8,8 @@ import { Album } from 'src/app/model/Albums';
 })
 export class AlbumsGridComponent implements OnInit {
 
-  @Input('albums')
-  albums: Album[];
+  @Input()
+  albums:Album[]
 
   constructor() { }
 

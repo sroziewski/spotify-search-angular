@@ -1,43 +1,50 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Playlist } from 'src/app/model/Playlist';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
+import { Playlist } from "src/app/model/Playlist";
+import { NgForm } from "@angular/forms";
 
 @Component({
-  selector: 'app-playlist-details',
-  templateUrl: './playlist-details.component.html',
-  styleUrls: ['./playlist-details.component.scss']
+  selector: "app-playlist-details",
+  templateUrl: "./playlist-details.component.html",
+  styleUrls: ["./playlist-details.component.scss"]
 })
 export class PlaylistDetailsComponent implements OnInit {
-
-  @Input('playlist')
+  @Input()
   playlist: Playlist;
 
-  mode: string = 'show';
+  constructor() {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
+  mode = "show";
 
   edit() {
-    this.mode = 'edit';
+    this.mode = "edit";
   }
 
   cancel() {
-    this.mode = 'show'
+    this.mode = "show";
   }
 
   @Output()
   playlistChange = new EventEmitter<Playlist>();
 
-  save(form) {
-    const draft: Pick<Playlist, 'name' | 'favourite' |'color'> = form.value;
+  save(formRef: NgForm) {
+
+    // const draft:Partial<Playlist> = formRef.value
+
+    const draft:Pick<Playlist, 'name' | 'favourite' | 'color'> = formRef.value
+
     const playlist = {
       ...this.playlist,
       ...draft
     }
-    this.playlistChange.emit(playlist);
-    this.mode = 'show'
+   
+    this.playlistChange.emit(playlist)
   }
-
 }
+
+
+// type Partial<T> = {
+//   [key in keyof T ]?: T[key]
+// }
+

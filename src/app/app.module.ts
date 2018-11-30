@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ApplicationRef } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,13 +14,22 @@ import { SecurityModule } from './security/security.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     PlaylistsModule,
     SharedModule,
     MusicModule,
-    SecurityModule
+    SecurityModule,
+    AppRoutingModule,
   ],
   providers: [],
+  // entryComponents:[AppComponent],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  // constructor(private app:ApplicationRef){}
+
+  // ngDoBootstrap(){
+  //   this.app.bootstrap(AppComponent)
+  //   this.app.bootstrap(AppComponent,'.placki')
+  // }
+ }

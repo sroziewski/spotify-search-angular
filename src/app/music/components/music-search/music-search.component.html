@@ -1,22 +1,31 @@
+<!-- .row*2>.col -->
+
 <div class="row">
   <div class="col">
-    <app-search-form  
-    (queryChange)="search($event)"
+    <app-search-form
     [query]="query$ | async"
-    ></app-search-form>
+    (queryChange)="search($event)">
+    </app-search-form>
   </div>
-</div> 
+</div>
 
 <div class="row">
-    <div class="col">
-
-      <p *ngIf="message" class="alert alert-danger">{{message}}</p>
-<ng-container *ngIf="(albums$ | async) as albums">
-  <p>Found {{albums.length}} results</p>
-  <app-albums-grid [albums]='albums'></app-albums-grid>
-</ng-container>
-
-
+  <div class="col">
     
+    <p class="alert alert-danger" *ngIf="message">
+      {{message}}
+    </p>
+    
+
+    <ng-container *ngIf="(albums$ | async) as albums">
+
+      <p>Found {{albums.length}} results</p>
+  
+      <app-albums-grid [albums]="albums"></app-albums-grid>
+
+    </ng-container>
+
+
+
   </div>
 </div>

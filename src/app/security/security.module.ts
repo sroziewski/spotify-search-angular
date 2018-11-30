@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService, AuthConfig } from './auth.service';
-import { environment } from 'src/environments/environment';
-import { AuthInterceptorService } from './auth-interceptor.service';
+import { environment } from '../../environments/environment';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from './auth-interceptor.service';
 
 @NgModule({
   declarations: [],
@@ -12,18 +12,19 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
   ],
   providers:[
     {
-      provide: AuthConfig,
+      provide:AuthConfig,
       useValue: environment.authConfig
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
-      multi: true
+      multi:true
     }
   ]
 })
-export class SecurityModule { 
-  constructor(private auth: AuthService){
+export class SecurityModule {
+
+  constructor(private auth:AuthService){
     this.auth.getToken()
   }
-}
+ }
